@@ -1,72 +1,72 @@
 # Gdx-Assets-Protector-Examples
 
-### 专为 libGDX 引擎设计的资源保护工具
+### A resource protection tool designed specifically for the libGDX engine.
 
 ![](README-Res/libGDX-Protector.png)
 
----
-
-### 功能特点
-
-- **只需修改很少的代码即可保护您的 libGDX 游戏资源**
-
-- **以包形式组织加密资源，支持同时加载多个加密包**
-
-- **完全于内存解密，几乎不会有敏感内容暴露于磁盘**
-
-- **与 libGDX AssetManager 几乎相同的使用方式，学习成本极低**
-
-- **只在您需要时解密需要的资源，内存占用率低，保护效果好**
-
-- **耗时部分使用 C++ 等本地代码实现，性能更高**
-
-- **支持 Windows 与 Android 双平台**
-
-- **基于 ChaCha20-Poly1305 算法的加密，在移动端也有良好的性能表现**
+[Chinese Documentation](README-zh.md)
 
 ---
 
-### 工具下载
+### Feature Highlights:
 
-[资源加密工具(Windows)](README-Res/AssetsProtectorGdx.exe)
+- **Protect your libGDX game resources with minimal code modification.**
 
-[运行时库(包含Windows原生库)](README-Res/gdx-protector.jar)
+- **Organize encrypted resources in package format, supporting the simultaneous loading of multiple encrypted packages.**
 
-[运行时库(不含Windows原生库)](README-Res/gdx-protector-android.jar)
+- **Decryption entirely in memory, minimizing sensitive content exposure to the disk.**
 
-[Android原生库](README-Res/android-native-libs.zip)
+- **Usage similar to libGDX AssetManager, resulting in a very low learning curve.**
+
+- **Decrypt only the necessary resources when needed, minimizing memory footprint for effective protection.**
+
+- **Optimized performance with time-consuming tasks implemented in native code, such as C++.**
+
+- **Support for both Windows and Android platforms.**
+
+- **Encryption based on the ChaCha20-Poly1305 algorithm, offering excellent performance on mobile devices.**
 
 ---
 
-### 简要教程
+### Download
 
-###### 在开始前，请确保您下载了[资源加密工具(Windows)](README-Res/AssetsProtectorGdx.exe)，如果需要跨平台编译，请下载[运行时库(包含Windows原生库)](README-Res/gdx-protector.jar)，其中包含了 Windows 项目所需的 dll 库，如果仅编译安卓项目，请下载[运行时库(不含Windows原生库)](README-Res/gdx-protector-android.jar)，这将有效减少生成的 apk 文件大小。如果您要编译 Android 项目，还请下载[Android原生库](README-Res/android-native-libs.zip)。
+[Resource Encryption Tool (Windows)](README-Res/AssetsProtectorGdx.exe)
 
-##### 1. 使用资源加密工具加密资源文件
+[Runtime Library (Includes Windows Native Libraries)](README-Res/gdx-protector.jar)
 
-请将资源加密工具与包含您所有待加密资源的文件夹放于同一目录下，并运行资源加密工具
+[Runtime Library (Excludes Windows Native Libraries)](README-Res/gdx-protector-android.jar)
 
-![1.png](README-Res/1.png)
+[Android Native Library](README-Res/android-native-libs.zip)
 
-1. 在 *Please input your assets path* 步骤，请输入您的资源路径，必须使用相对路径（在本例中是 assets），否则会出现错误。
+---
 
-2. 在 *Use password or random key to crypto assets?* 步骤，按下 0 或者 1 以选择加密方式，0 为随机密钥方式，1 为密码方式。密码方式也会在工具内部通过哈希计算密钥，我推荐您使用密钥方式，这更为安全。如果选择密码方式，请在下一步输入您的密码。
+### Brief Tutorial
 
-3. 在 *Please input the file path of the encrypted package* 步骤，请使用相对路径输入加密文件的保存位置，例如 secretPackage/package.bin，这会使加密文件保存到当前文件夹的secretPackage目录下，名为package.bin。敲下回车，您应该可以在该目录下看到您的加密文件和与它同名的两个附加文件。
+###### Before you begin, make sure you have downloaded the [Resource Encryption Tool (Windows)](README-Res/AssetsProtectorGdx.exe). If you need cross-platform compilation, download the [Runtime Library (Includes Windows Native Libraries)](README-Res/gdx-protector.jar), which includes the necessary dll libraries for Windows projects. If you are compiling only an Android project, download the [Runtime Library (Excludes Windows Native Libraries)](README-Res/gdx-protector-android.jar) to reduce the size of the generated apk file. If you are compiling an Android project, also download the [Android Native Library](README-Res/android-native-libs.zip).
 
-**附加文件说明**
+##### 1. Use the Resource Encryption Tool to encrypt resource files
 
-***.key**  32字节的密钥文件，使用密钥方式加密时解密需要用到。
+1. Place the Resource Encryption Tool in the same directory as the folder containing all the resources you want to encrypt, and run the tool.
+   
+   1. In the *Please input your assets path* step, enter your resource path, using a relative path (in this example, it's "assets"). Using an absolute path may result in errors.
+   
+   2. In the *Use password or random key to crypto assets?* step, press 0 or 1 to choose the encryption method. 0 represents the random key method, and 1 represents the password method. The password method internally calculates the key through hashing. I recommend using the key method for increased security. If you choose the password method, enter your password in the next step.
+   
+   3. In the *Please input the file path of the encrypted package* step, use a relative path to input the location to save the encrypted file, for example, "secretPackage/package.bin". This will save the encrypted file to the "secretPackage" directory in the current folder with the name "package.bin". Press Enter, and you should see your encrypted file and two additional files with the same name in that directory.
 
-***.log**  加密日志文件，写有密钥，密码（密码方式加密）以及加密包中所有的资源文件路径，绝对不可泄漏。
+**Additional File Explanation:**
 
-**注意：您可以自行决定加密文件的后缀名，但请不要使用 .key 或 .log ，这会导致附加文件生成失败。**
+- **.key**: A 32-byte key file used for decryption when using the key method.
 
-##### 2. 配置运行时库（gradle环境）
+- **.log**: An encryption log file containing the key, password (if using the password method), and the paths of all resource files in the encrypted package. This file must not be leaked under any circumstances.
 
-- 仅 Windows
+**Note: You can decide the file extension for the encrypted file, but please avoid using .key or .log, as it will result in failure to generate the additional files.**
+
+##### 2. Configure Runtime Library (Gradle Environment)
+
+- Only Windows
   
-  下载[运行时库(包含Windows原生库)](README-Res/gdx-protector.jar)，在 core 目录下新建 libs 目录，将运行时库放置于该目录，在 core/build.gradle 中添加如下语句，并刷新 gradle 项目，这会使 core 模块引用 core/libs 目录下的所有库。
+  Download [Runtime Library (Includes Windows Native Libraries)](README-Res/gdx-protector.jar), create a new 'libs' directory under the 'core' directory, place the runtime library in that directory, add the following statement in 'core/build.gradle', and refresh the Gradle project. This will make the 'core' module reference all the libraries under the 'core/libs' directory.
   
   ```groovy
   dependencies {
@@ -74,11 +74,11 @@
   }
   ```
   
-  结束了，仅此而已。
+  Finished, that's all.
 
-- 仅 Android
+- Only Android
   
-  下载[运行时库(不含Windows原生库)](README-Res/gdx-protector-android.jar)，在 core 目录下新建 libs 目录，将运行时库放置于该目录，在 core/build.gradle 中添加如下语句，并刷新 gradle 项目，这会使 core 模块引用 core/libs 目录下的所有库。
+  Download [Runtime Library (Excludes Windows Native Libraries)](README-Res/gdx-protector-android.jar), create a new 'libs' directory under the 'core' directory, place the runtime library in that directory, add the following statement in 'core/build.gradle', and refresh the Gradle project. This will make the 'core' module reference all the libraries under the 'core/libs' directory.
   
   ```groovy
   dependencies {
@@ -86,89 +86,92 @@
   }
   ```
   
-  下载[Android原生库](README-Res/android-native-libs.zip)，将 android-native-libs 目录下的文件解压到 android/libs 目录下。
+  Download [Android Native Library](README-Res/android-native-libs.zip) and extract the files from the 'android-native-libs' directory to the 'android/libs' directory.
 
-- 跨平台编译
+- Cross-platform Compilation
   
-  仅需将 Android 配置方法中的运行时库替换为[运行时库(包含Windows原生库)](README-Res/gdx-protector.jar)即可。
+  Simply replace the runtime library in the Android configuration with [Runtime Library (Includes Windows Native Libraries)](README-Res/gdx-protector.jar).
 
-##### 3. 基本代码
+##### 3. Example Code
 
-运行时库的核心类是 SecretAssetManager，该类的使用方法类似于 AssetManager，但拥有从加密包中加载资源的能力。
+The core class of the runtime library is `SecretAssetManager`, and its usage is similar to `AssetManager`. However, it has the capability to load resources from encrypted packages.
 
 ```java
 SecretAssetManager manager = new SecretAssetManager();
 ```
 
-loadPackage 是 SecretManager 的特有方法，可以载入加密包。
+`loadPackage` is a unique method of `SecretManager`, allowing the loading of encrypted packages.
 
 ```java
-// 载入 data.msf 包，密码为 muzistudio
+// Load the data.msf package with the password "muzistudio"
 manager.loadPackage(Gdx.files.internal("data.msf"), "muzistudio");
-// 载入 data.msf 包，密钥为 data.key 文件
+
+// Load the data.msf package with the key from the data.key file
 manager.loadPackage(Gdx.files.internal("data.msf"), Gdx.files.internal("data.key"));
-// 载入 data.msf 包，密钥为提供的字节数组(32位)
+
+// Load the data.msf package with the provided byte array as the key (32 bytes)
 manager.loadPackage(Gdx.files.internal("data.msf"), new byte[]{...});
 ```
 
-从加密包中加载资源，其中资源路径可以参考资源加密工具生成的 *.log 文件，SecretAssetManager 同样支持从一般路径加载文件，只需要去掉类的 Secret- 前缀即可。
+Load resources from an encrypted package. The resource path can be referenced from the *.log file generated by the Resource Encryption Tool. `SecretAssetManager` also supports loading files from regular paths; just remove the "Secret-" prefix from the class.
 
 ```java
-// 从加密包中加载资源，类型为 SecretTexture.class
+// Load a resource from the encrypted package, with the type SecretTexture.class
 manager.load("Texture/gdx.png", SecretTexture.class);
-// 从正常路径加载资源，类型为 Texture.class
+
+// Load a resource from a regular path, with the type Texture.class
 // manager.load("Texture/gdx.png", Texture.class);
-// 等待资源加载完毕
+
+// Wait for the resources to finish loading
 manager.finishLoading();
-// 获取资源，由于 SecretTexture 继承自 Texture，两者可以自动转换，但有部分类不支持此转换，请参见后文
+
+// Get the resource; since SecretTexture extends Texture, they can be automatically converted, 
+// but note that some classes might not support this conversion, please refer to the documentation
 Texture texture = manager.get("Texture/gdx.png");
 ```
 
-现在您可以使用从加密包中加载出的 Texture 类了。
+Now you can use the `Texture` class loaded from the encrypted package.
 
-
-
-与原 AssetManager 相比，SecretAssetManager 支持加载 SecretFileHandle，基于此类可以实现任意加密文件的加载。此类类似于 FileHandle，但绝不能代替 FileHandle 用作其他 Gdx 类的参数，这是因为 SecretFileHandle 是 FileHandle 在内存上的模拟，实际上硬盘并不存在此文件。
+In comparison to the original `AssetManager`, `SecretAssetManager` supports loading `SecretFileHandle`. With this class, you can load any encrypted file. It is similar to `FileHandle`, but it should never be used as a replacement for `FileHandle` in other Gdx classes. This is because `SecretFileHandle` is a simulated representation of a file in memory, and the actual file does not exist on the disk.
 
 ```java
-// 加载 SecretFileHandle
+// Load a SecretFileHandle
 manager.load("FileHandle/secret.txt", SecretFileHandle.class);
-// 等待资源加载完毕
+
+// Wait for the resource to finish loading
 manager.finishLoading();
-// 获取 SecretFileHandle 对象
+
+// Get the SecretFileHandle object
 SecretFileHandle file = manager.get("FileHandle/secret.txt");
-// 打印获取到的文件内容
+
+// Print the content of the obtained file
 System.out.println(file.readString());
 ```
 
-
-
-带参数的加载，使用方法与原 AssetManager 一致
+Loading resources with parameters, using the same method as the original AssetManager.
 
 ```java
-// SecretBitmap 参数
+// SecretBitmapFont parameters
 SecretBitmapFontParameter parameter = new SecretBitmapFontParameter();
-// 设置字体缩放比例为 2f （仅加密字体支持此参数）
+// Set the font scale to 2f (this parameter is only supported for encrypted fonts)
 parameter.fontScale = 2f;
-// 在加载时传递参数
-game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);
+// Pass the parameters during loading
+game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);**其他类的加载方式请自行查看此演示项目源码**
 ```
-
-**其他类的加载方式请自行查看此演示项目源码**
 
 ---
 
-### 支持类
+### Supporting Classes
 
-*加密类 - 原始类*
+*Encrypted Class - Original Class*
 
 - **SecretBitmapFont - BitmapFont**
 
 - **SecretFileHandle - FileHandle**
 
-- **SecretI18NBundle - I18NBundle (不支持转换)**
+- **SecretI18NBundle - I18NBundle (Not supported for conversion)**
 
-- **SecretMusic - Music (不支持转换)**
+- **SecretMusic - Music (Not supported for conversion)**
 
 - **SecretParticleEffect - ParticleEffect**
 
@@ -180,7 +183,7 @@ game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);
 
 - **SecretSkin - Skin**
 
-- **SecretSound - Sound (不支持转换)**
+- **SecretSound - Sound (Not supported for conversion)**
 
 - **SecretTexture - Texture**
 
@@ -188,17 +191,17 @@ game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);
 
 - **SecretTiledMap(.tide) & SecretTiledMap(.tmx) - TiledMap**
 
-- **其他类（3D API）等待开发**
+- **Other classes (3D API) under development**
 
 ---
 
-### 注意事项
+### Precautions
 
-- 该库最佳支持 libGDX 版本：1.12.0，1.10.0 版本以下未经测试。
+- This library is best supported for libGDX version 1.12.0; versions below 1.10.0 have not been tested.
 
-- SecretMusic 与 SecretSound 类在Android平台由于 libGDX 后端原因，目前仅实现将音频解密到磁盘并播放。
+- Due to backend reasons in libGDX, `SecretMusic` and `SecretSound` classes on the Android platform currently only decrypt the audio to disk and then play it.
 
-- Android 端发布时，请在 android/proguard-rules.pro 文件中添加如下内容，这将防止混淆关键代码导致的无法运行。
+- When releasing on the Android platform, please add the following content to the android/proguard-rules.pro file. This will prevent issues caused by obfuscation of crucial code.
   
   ```groovy
   -keep class com.sun.jna.** { *; }
@@ -206,18 +209,18 @@ game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);
   -keep class com.badlogic.** {**[] $VALUES;*;}
   ```
   
-  并在 gradle.properties 文件中添加以下内容启用 AndroidX。
+  And add the following content to the gradle.properties file to enable AndroidX.
   
   ```groovy
   android.useAndroidX=true
   ```
 
-- 加密的安全性主要取决于您对密钥或密码的保护，尽可能混淆代码以提高安全性。该工具不保证能承受混淆或加固，请谨慎使用。
+- The security of encryption primarily depends on how well you protect the key or password. It is recommended to obfuscate the code as much as possible to enhance security. This tool does not guarantee resistance to obfuscation or hardening, so use it with caution.
 
 ---
 
-### 声明
+### Declaration
 
-* 如需咨询问题，请加 libGDX 吧官方 QQ 群：1051955354  [点击加群](https://qm.qq.com/cgi-bin/qm/qr?k=nF1aCeY5JjPLtKLcmZqzISk-qBpXdmhm&jump_from=webapi&authKey=vJ0DKK9jsJCOX8cZhdoKVWG5obuthQHyyqNhlhaNnNjKhXDZkZVJa49xjLua/U4v)
-* **如果工具对您有帮助，欢迎Star**
-* 该工具未经大量测试，可能存在重大 bug，如果发现 bug，请提交 Issues，我将尽可能解决。
+- For inquiries, please join the official libGDX QQ group: 1051955354 [Join Group](https://qm.qq.com/cgi-bin/qm/qr?k=nF1aCeY5JjPLtKLcmZqzISk-qBpXdmhm&jump_from=webapi&authKey=vJ0DKK9jsJCOX8cZhdoKVWG5obuthQHyyqNhlhaNnNjKhXDZkZVJa49xjLua/U4v)
+- **If the tool is helpful to you, feel free to give it a star.**
+- This tool has not undergone extensive testing and may have significant bugs. If you encounter any bugs, please submit them as issues, and I will try to resolve them as soon as possible.
