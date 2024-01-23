@@ -47,6 +47,7 @@
 ##### 1. Use the Resource Encryption Tool to encrypt resource files
 
 1. Place the Resource Encryption Tool in the same directory as the folder containing all the resources you want to encrypt, and run the tool.
+   ![1.png](README-Res/1.png)
    
    1. In the *Please input your assets path* step, enter your resource path, using a relative path (in this example, it's "assets"). Using an absolute path may result in errors.
    
