@@ -4,7 +4,7 @@
 
 ![](README-Res/libGDX-Protector.png)
 
-[Chinese Documentation](README-zh.md)
+[中文文档](README-zh.md)
 
 ---
 
