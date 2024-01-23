@@ -4,7 +4,7 @@
 
 ![](README-Res/libGDX-Protector.png)
 
-[Chinese Documentation](README-zh.md)
+[中文文档](README-zh.md)
 
 ---
 
@@ -47,6 +47,7 @@
 ##### 1. Use the Resource Encryption Tool to encrypt resource files
 
 1. Place the Resource Encryption Tool in the same directory as the folder containing all the resources you want to encrypt, and run the tool.
+   ![1.png](README-Res/1.png)
    
    1. In the *Please input your assets path* step, enter your resource path, using a relative path (in this example, it's "assets"). Using an absolute path may result in errors.
    
@@ -156,9 +157,9 @@ SecretBitmapFontParameter parameter = new SecretBitmapFontParameter();
 // Set the font scale to 2f (this parameter is only supported for encrypted fonts)
 parameter.fontScale = 2f;
 // Pass the parameters during loading
-game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);**其他类的加载方式请自行查看此演示项目源码**
+game.manager.load("BitmapFont/font.fnt", SecretBitmapFont.class, parameter);
 ```
-
+**For the loading methods of other classes, please refer to the source code of this demo project.**
 ---
 
 ### Supporting Classes
